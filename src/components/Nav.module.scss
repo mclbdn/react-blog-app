@@ -1,0 +1,65 @@
+@import "../styles/vars";
+
+nav {
+  background-color: $light-gray-color;
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+  padding-right: 20px;
+
+  .logo {
+    padding-top: 3px;
+    padding-bottom: 9px;
+    margin-right: 40px;
+  }
+
+  .left_side_nav {
+    display: flex;
+    align-items: center;
+
+    a {
+      text-decoration: none;
+      color: $black-color;
+      font-size: 15px;
+
+      &:first-of-type {
+        margin-right: 40px;
+      }
+
+      @media screen and (min-width: 744px) {
+        font-size: 18px;
+      }
+
+      @media screen and (min-width: 1440px) {
+        font-size: 20px;
+      }
+    }
+  }
+
+  .right_side_nav {
+    a {
+      text-decoration: none;
+      color: $blue-color;
+      font-size: 15px;
+
+      @media screen and (min-width: 744px) {
+        font-size: 18px;
+      }
+
+      @media screen and (min-width: 1440px) {
+        font-size: 20px;
+      }
+    }
+  }
+
+  @media screen and (min-width: 744px) {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  @media screen and (min-width: 1440px) {
+    padding-left: 140px;
+    padding-right: 140px;
+  }
+}
