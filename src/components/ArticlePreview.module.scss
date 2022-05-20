@@ -3,19 +3,122 @@
 .article_preview_container {
   display: flex;
   flex-direction: column;
+  margin-bottom: 20px;
 
   .left_side_preview {
+    flex-basis: 25%;
+    border-radius: 2px;
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+
+    @media screen and (min-width: 744px) {
+      flex-basis: 40%;
+    }
+
   }
 
   .right_side_preview {
+    flex-basis: 75%;
+
+    h4 {
+      line-height: 100%;
+      color: $black-color;
+      font-size: 18px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+
+      @media screen and (min-width: 744px) {
+        margin-top: 0px;
+        font-size: 20px;
+        margin-bottom: 13px;
+      }
+
+      @media screen and (min-width: 1440px) {
+        font-size: 24px;
+        margin-bottom: 16px;
+      }
+    }
+
+    .name_and_date {
+      font-size: 10px;
+      margin-bottom: 10px;
+      color: $secondary-gray-color;
+
+      @media screen and (min-width: 744px) {
+        font-size: 12px;
+        margin-bottom: 13px;
+      }
+
+      @media screen and (min-width: 1440px) {
+        font-size: 14px;
+        margin-bottom: 16px;
+      }
+    }
+
+    .perex {
+      color: $black-color;
+      font-size: 12px;
+      margin-bottom: 10px;
+
+      @media screen and (min-width: 744px) {
+        font-size: 15px;
+        margin-bottom: 13px;
+      }
+
+      @media screen and (min-width: 1440px) {
+        font-size: 16px;
+        margin-bottom: 16px;
+      }
+    }
+
+    .link_and_comments {
+      font-size: 10px;
+
+      a {
+        text-decoration: none;
+        color: $link-blue-color;
+
+        @media screen and (min-width: 744px) {
+          margin-right: 20px;
+        }
+      }
+
+      p {
+        color: $secondary-gray-color;
+      }
+
+      @media screen and (min-width: 744px) {
+        font-size: 12px;
+      }
+
+      @media screen and (min-width: 1440px) {
+        font-size: 14px;
+      }
+
+      @media screen and (min-width: 744px) {
+        display: flex;
+      }
+    }
+
     @media screen and (min-width: 744px) {
+      margin-left: 20px;
+      flex-basis: 60%;
     }
 
     @media screen and (min-width: 1440px) {
+      margin-left: 24px;
     }
   }
 
-  @media screen and (min-width: 1440px) {
+  @media screen and (min-width: 744px) {
+    margin-bottom: 26px;
+  }
+
+  @media screen and (min-width: 744px) {
+    margin-bottom: 32px;
     flex-direction: row;
   }
 }
