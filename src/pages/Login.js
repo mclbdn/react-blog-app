@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import Nav from "../components/Nav";
 import styles from "./Login.module.scss";
 
@@ -29,6 +30,7 @@ const Login = () => {
 
     if (response.status === 200) {
       localStorage.setItem("access_token", data.access_token);
+      navigate("/");
     } else if (response.status === 401) {
       setFormHasErrors({
         message: "API key is invalid!",

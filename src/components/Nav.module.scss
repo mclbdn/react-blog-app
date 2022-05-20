@@ -11,7 +11,15 @@ nav {
   .logo {
     padding-top: 3px;
     padding-bottom: 9px;
-    margin-right: 40px;
+    margin-right: 10px;
+
+    @media screen and (min-width: 744px) {
+      font-size: 20px;
+    }
+
+    @media screen and (min-width: 1440px) {
+      font-size: 40px;
+    }
   }
 
   .left_side_nav {
@@ -21,34 +29,55 @@ nav {
     a {
       text-decoration: none;
       color: $black-color;
-      font-size: 15px;
+      font-size: 14px;
 
       &:first-of-type {
-        margin-right: 40px;
+        margin-right: 10px;
+
+        @media screen and (min-width: 744px) {
+          margin-right: 20px;
+        }
+
+        @media screen and (min-width: 1440px) {
+          margin-right: 40px;
+        }
       }
 
       @media screen and (min-width: 744px) {
-        font-size: 18px;
+        font-size: 15px;
       }
 
       @media screen and (min-width: 1440px) {
-        font-size: 20px;
+        font-size: 16px;
       }
     }
   }
 
   .right_side_nav {
-    a {
-      text-decoration: none;
-      color: $blue-color;
-      font-size: 15px;
+    .logout_btn {
+      color: $black-color;
+      margin-left: 10px;
 
       @media screen and (min-width: 744px) {
-        font-size: 18px;
+        margin-left: 20px;
       }
 
       @media screen and (min-width: 1440px) {
-        font-size: 20px;
+        margin-left: 40px;
+      }
+    }
+
+    a {
+      text-decoration: none;
+      color: $blue-color;
+      font-size: 14px;
+
+      @media screen and (min-width: 744px) {
+        font-size: 15px;
+      }
+
+      @media screen and (min-width: 1440px) {
+        font-size: 16px;
       }
     }
   }
@@ -59,7 +88,7 @@ nav {
   }
 
   @media screen and (min-width: 1440px) {
-    padding-left: 140px;
-    padding-right: 140px;
+    padding-left: 224px;
+    padding-right: 224px;
   }
 }
