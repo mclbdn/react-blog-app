@@ -58,14 +58,15 @@ main {
     }
 
     label {
-      font-size: 16px;
+      font-size: 12px;
+      margin-bottom: 8px;
 
       @media screen and (min-width: 744px) {
-        font-size: 20px;
+        font-size: 14px;
       }
 
       @media screen and (min-width: 1440px) {
-        font-size: 24px;
+        font-size: 16px;
       }
     }
 
@@ -95,14 +96,15 @@ main {
     }
 
     p {
-      font-size: 16px;
+      font-size: 12px;
+      margin-bottom: 8px;
 
       @media screen and (min-width: 744px) {
-        font-size: 20px;
+        font-size: 14px;
       }
 
       @media screen and (min-width: 1440px) {
-        font-size: 24px;
+        font-size: 16px;
       }
     }
 
@@ -132,27 +134,36 @@ main {
     .uploaded_img {
       height: 74px;
       width: auto;
+      margin-bottom: 8px;
     }
 
-    .reupload_image_btn {
-      padding: 0;
-      cursor: pointer;
-      color: $link-blue-color;
-      background-color: transparent;
-      border: none;
-    }
+    .reupload_and_delete_container {
+      margin-bottom: 8px;
 
-    .divider_p {
-      display: inline;
-      color: $border-dark-color;
-    }
+      .reupload_image_btn {
+        padding: 0;
+        cursor: pointer;
+        color: $link-blue-color;
+        background-color: transparent;
+        border: none;
+      }
 
-    .delete_image_btn {
-      padding: 0;
-      cursor: pointer;
-      color: $red-color;
-      background-color: transparent;
-      border: none;
+      .divider_p {
+        display: inline;
+        color: $border-dark-color;
+      }
+
+      .delete_image_btn {
+        padding: 0;
+        cursor: pointer;
+        color: $red-color;
+        background-color: transparent;
+        border: none;
+      }
+
+      @media screen and (min-width: 744px) {
+        margin-bottom: 16px;
+      }
     }
   }
 

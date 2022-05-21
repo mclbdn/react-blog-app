@@ -139,10 +139,10 @@ const NewArticle = () => {
             </button>
           )}
           {imageWasUploaded && (
-            <div>
+            <div className={styles.reupload_and_delete_container}>
               <img className={styles.uploaded_img} src={imageUrl} alt="uploaded file" />{" "}
               <button type="button" onClick={handleBtnClick} className={styles.reupload_image_btn}>
-                Upload new
+                ReUpload new
               </button>{" "}
               <p className={styles.divider_p}>|</p>{" "}
               <button type="button" onClick={handleDelete} className={styles.delete_image_btn}>
@@ -150,6 +150,7 @@ const NewArticle = () => {
               </button>
             </div>
           )}
+          <p className={styles.p}>Content</p>
         </form>
       </main>
     </>
