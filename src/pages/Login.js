@@ -46,7 +46,7 @@ const Login = () => {
     <>
       <Nav />
       <main>
-        <form onSubmit={login}>
+        <form className={styles.login_form} onSubmit={login}>
           {formHasErrors && <p className={styles.form_error}>{formHasErrors.message}</p>}
           <h1 className={styles.h1}>Log In</h1>
           <div className={styles.form_content}>

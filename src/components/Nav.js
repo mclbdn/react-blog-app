@@ -31,7 +31,7 @@ const Nav = () => {
       <div className={styles.right_side_nav}>
         {isLoggedIn ? (
           <div>
-            <a href="/createarticle">Create Article</a>{" "}
+            <a href="/newarticle">Create Article</a>{" "}
             <FontAwesomeIcon className={styles.logout_btn} onClick={logout} icon={faArrowRightFromBracket} />
           </div>
         ) : (

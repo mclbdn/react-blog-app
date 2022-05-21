@@ -13,6 +13,7 @@ const ArticleList = () => {
         headers: {
           "Content-Type": "application/json",
           "X-API-KEY": "af699f87-dfe3-4a31-9206-a9267dd42a6b",
+          Authorization: localStorage.getItem("access_token"),
         },
       });
 
