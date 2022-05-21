@@ -47,7 +47,7 @@ const NewArticle = () => {
         });
 
         const data = await response.json();
-        console.log(data);
+
         navigate("/");
       } catch (error) {
         console.log(error);
@@ -67,9 +67,9 @@ const NewArticle = () => {
       });
 
       const imageBlob = await response.blob();
-      console.log(imageBlob);
+
       const localUrl = URL.createObjectURL(imageBlob);
-      console.log(localUrl);
+
       setImageUrl(localUrl);
     } catch (error) {
       console.log(error);

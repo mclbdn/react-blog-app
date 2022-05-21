@@ -13,7 +13,7 @@ const ArticleList = () => {
         headers: {
           "Content-Type": "application/json",
           "X-API-KEY": "af699f87-dfe3-4a31-9206-a9267dd42a6b",
-          Authorization: localStorage.getItem("access_token"),
+          "Authorization": localStorage.getItem("access_token"),
         },
       });
 
@@ -37,7 +37,15 @@ const ArticleList = () => {
         <h1 className={styles.h1}>Recent articles</h1>
         {articles &&
           articles.map((article) => {
-            return <ArticlePreview title={article.title} createdAt={article.createdAt} perex={article.perex} />;
+            return (
+              <ArticlePreview
+                articleId={article.articleId}
+                title={article.title}
+                createdAt={article.createdAt}
+                perex={article.perex}
+                imageId={article.imageId}
+              />
+            );
           })}
       </main>
     </>
