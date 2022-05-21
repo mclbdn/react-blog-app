@@ -57,6 +57,7 @@ nav {
     .logout_btn {
       color: $black-color;
       margin-left: 10px;
+      cursor: pointer;
 
       @media screen and (min-width: 744px) {
         margin-left: 20px;

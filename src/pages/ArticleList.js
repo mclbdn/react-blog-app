@@ -17,8 +17,13 @@ const ArticleList = () => {
       });
 
       const data = await response.json();
-      console.log(data.items);
-      setArticles(data.items);
+      const items = data.items;
+
+      items.sort(function (a, b) {
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      });
+
+      setArticles(items);
     };
 
     fetchArticles();
@@ -31,7 +36,7 @@ const ArticleList = () => {
         <h1 className={styles.h1}>Recent articles</h1>
         {articles &&
           articles.map((article) => {
-            return <ArticlePreview />;
+            return <ArticlePreview title={article.title} createdAt={article.createdAt} perex={article.perex} />;
           })}
       </main>
     </>

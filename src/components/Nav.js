@@ -3,9 +3,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import logo from "../assets/logo.svg";
 import styles from "./Nav.module.scss";
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 const Nav = () => {
+  const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const logout = () => {
+    localStorage.removeItem("access_token");
+    navigate("/login");
+  };
 
   useEffect(() => {
     const accessToken = localStorage.getItem("access_token");
@@ -24,7 +31,8 @@ const Nav = () => {
       <div className={styles.right_side_nav}>
         {isLoggedIn ? (
           <div>
-            <a href="/createarticle">Create Article</a> <FontAwesomeIcon className={styles.logout_btn} icon={faArrowRightFromBracket} />
+            <a href="/createarticle">Create Article</a>{" "}
+            <FontAwesomeIcon className={styles.logout_btn} onClick={logout} icon={faArrowRightFromBracket} />
           </div>
         ) : (
           <a href="/login">Log in</a>
