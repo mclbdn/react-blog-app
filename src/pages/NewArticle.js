@@ -1,17 +1,59 @@
 import styles from "./NewArticle.module.scss";
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Nav from "../components/Nav";
 import MDEditor from "@uiw/react-md-editor";
 import axios from "axios";
 
 const NewArticle = () => {
+  const navigate = useNavigate();
   const hiddenFileInput = useRef(null);
   const [mdContent, setMdContent] = useState("**Hello world!!!**");
   const [title, setTitle] = useState("");
+  const [perex, setPerex] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const [imageWasUploaded, setImageWasUploaded] = useState(false);
   const [imageId, setImageId] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  const [formHasErrors, setFormHasErrors] = useState({});
+
+  const publishArticle = async (e) => {
+    e.preventDefault();
+
+    if (mdContent.length === 0) {
+      setFormHasErrors({ message: "Please add some content!" });
+      return;
+    } else if (!title) {
+      setFormHasErrors({ message: "Please write a title!" });
+      return;
+    } else if (!imageUrl) {
+      setFormHasErrors({ message: "Please upload an image!" });
+      return;
+    } else {
+      try {
+        const response = await fetch(`https://fullstack.exercise.applifting.cz/articles`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-API-KEY": "af699f87-dfe3-4a31-9206-a9267dd42a6b",
+            Authorization: localStorage.getItem("access_token"),
+          },
+          body: JSON.stringify({
+            title,
+            perex,
+            content: mdContent,
+            imageId,
+          }),
+        });
+
+        const data = await response.json();
+        console.log(data);
+        navigate("/");
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
 
   const handleDownloadImage = async () => {
     console.log("Inside handle download");
@@ -102,14 +144,30 @@ const NewArticle = () => {
     fetchData();
   }, [imageId]);
 
+  function truncateString(str, num) {
+    if (str.length > num) {
+      return str.slice(0, num) + "...";
+    } else {
+      return str;
+    }
+  }
+
+  useEffect(() => {
+    let truncatedString = truncateString(mdContent, 50);
+    setPerex(truncatedString);
+  }, [mdContent]);
+
   return (
     <>
       <Nav />
       <main>
-        <form className={styles.publish_form}>
+        {formHasErrors && <p className={styles.form_error}>{formHasErrors.message}</p>}
+        <form onSubmit={publishArticle} className={styles.publish_form}>
           <div className={styles.heading_and_publish_container}>
             <h1 className={styles.h1}>Create new article</h1>
-            <button className={styles.publish_article_btn}>Publish article</button>
+            <button type="submit" className={styles.publish_article_btn}>
+              Publish article
+            </button>
           </div>
           <label htmlFor="title" className={styles.label}>
             Article Title
@@ -120,7 +178,7 @@ const NewArticle = () => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             id="title"
-            required
+            // required
             placeholder="My first article"
           />
           <p className={styles.p}>Featured image</p>
@@ -132,8 +190,7 @@ const NewArticle = () => {
             name="image"
             onChange={handleFileSelect}
             id="title"
-            required
-            placeholder="My first article"
+            // required
           />
           {!imageWasUploaded && (
             <button type="button" onClick={handleBtnClick} className={styles.upload_image_btn}>
