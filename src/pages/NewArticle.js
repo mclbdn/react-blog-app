@@ -1,10 +1,12 @@
 import styles from "./NewArticle.module.scss";
 import { useEffect, useRef, useState } from "react";
 import Nav from "../components/Nav";
+import MDEditor from "@uiw/react-md-editor";
 import axios from "axios";
 
 const NewArticle = () => {
   const hiddenFileInput = useRef(null);
+  const [mdContent, setMdContent] = useState("**Hello world!!!**");
   const [title, setTitle] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const [imageWasUploaded, setImageWasUploaded] = useState(false);
@@ -151,6 +153,10 @@ const NewArticle = () => {
             </div>
           )}
           <p className={styles.p}>Content</p>
+          <div className={styles.md_container}>
+            <MDEditor value={mdContent} onChange={setMdContent} />
+            <MDEditor.Markdown source={mdContent} />
+          </div>
         </form>
       </main>
     </>
