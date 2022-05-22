@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import axios from "axios";
 import Nav from "../components/Nav";
 import styles from "./Login.module.scss";
 
@@ -13,32 +13,51 @@ const Login = () => {
   const login = async (e) => {
     e.preventDefault();
 
-    const response = await fetch("https://fullstack.exercise.applifting.cz/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-API-KEY": "af699f87-dfe3-4a31-9206-a9267dd42a6b",
-      },
-      body: JSON.stringify({
-        username,
-        password,
-      }),
-    });
+    const formData = {
+      username,
+      password,
+    };
 
-    const data = await response.json();
-    console.log(data);
+    // const response = await fetch("https://fullstack.exercise.applifting.cz/login", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     "X-API-KEY": "af699f87-dfe3-4a31-9206-a9267dd42a6b",
+    //   },
+    //   body: JSON.stringify({
+    //     username,
+    //     password,
+    //   }),
+    // });
 
-    if (response.status === 200) {
-      localStorage.setItem("access_token", data.access_token);
-      navigate("/");
-    } else if (response.status === 401) {
-      setFormHasErrors({
-        message: "API key is invalid!",
+    // const data = await response.json();
+    // console.log(data);
+    try {
+      const response = await axios.post("https://fullstack.exercise.applifting.cz/login", formData, {
+        headers: {
+          "Content-Type": "application/json",
+          "X-API-KEY": "af699f87-dfe3-4a31-9206-a9267dd42a6b",
+        },
       });
-    } else if (response.status === 400) {
-      setFormHasErrors({
-        message: "Invalid login credentials!",
-      });
+
+      const data = await response.data;
+
+      if (response.status === 200) {
+        localStorage.setItem("access_token", data.access_token);
+        navigate("/");
+      }
+    } catch (err) {
+      if (err.response.status === 401) {
+        setFormHasErrors({
+          message: "API key is invalid!",
+        });
+      }
+
+      if (err.response.status === 400) {
+        setFormHasErrors({
+          message: "Invalid login credentials!",
+        });
+      }
     }
   };
 

@@ -37,7 +37,7 @@ const SingleArticle = () => {
   return (
     <>
       <Nav />
-      <main>
+      <main className={styles.single_article_main_content}>
         <article>
           <h1 className={styles.article_title}>lorem</h1>
           <p className={styles.name_and_date}>

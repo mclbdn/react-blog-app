@@ -19,52 +19,56 @@ const NewArticle = () => {
   const publishArticle = async (e) => {
     e.preventDefault();
 
+    // Did the user add content?
     if (perex.length === 0) {
       setFormHasErrors({ message: "Please add some content!" });
       return;
-    } else if (!title) {
+    }
+
+    // Did the user set a title?
+    if (!title) {
       setFormHasErrors({ message: "Please write a title!" });
       return;
-    } else if (!imageUrl) {
+    }
+
+    // Did the user set an image?
+    if (!imageUrl) {
       setFormHasErrors({ message: "Please upload an image!" });
       return;
-    } else {
-      try {
-        const response = await fetch(`https://fullstack.exercise.applifting.cz/articles`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-API-KEY": "af699f87-dfe3-4a31-9206-a9267dd42a6b",
-            Authorization: localStorage.getItem("access_token"),
-          },
-          body: JSON.stringify({
-            title,
-            perex,
-            imageId,
-          }),
-        });
-
-        const data = await response.json();
-
-        navigate("/");
-      } catch (error) {
-        console.log(error);
-      }
     }
-  };
 
-  const handleDownloadImage = async () => {
-    console.log("Inside handle download");
     try {
-      const response = await fetch(`https://fullstack.exercise.applifting.cz/images/${imageId}`, {
-        method: "GET",
+      const dataToSend = {
+        title,
+        perex,
+        imageId,
+      };
+
+      await axios.post("https://fullstack.exercise.applifting.cz/articles", dataToSend, {
         headers: {
+          "Content-Type": "application/json",
           "X-API-KEY": "af699f87-dfe3-4a31-9206-a9267dd42a6b",
           Authorization: localStorage.getItem("access_token"),
         },
       });
 
-      const imageBlob = await response.blob();
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleDownloadImage = async () => {
+    try {
+      const response = await axios.get(`https://fullstack.exercise.applifting.cz/images/${imageId}`, {
+        headers: {
+          "X-API-KEY": "af699f87-dfe3-4a31-9206-a9267dd42a6b",
+          Authorization: localStorage.getItem("access_token"),
+        },
+        responseType: "blob",
+      });
+
+      const imageBlob = response.data;
 
       const localUrl = URL.createObjectURL(imageBlob);
 
@@ -74,10 +78,9 @@ const NewArticle = () => {
     }
   };
 
-  const handleDelete = async () => {
+  const handleImageDelete = async () => {
     try {
-      const response = await fetch(`https://fullstack.exercise.applifting.cz/images/${imageId}`, {
-        method: "DELETE",
+      await axios.delete(`https://fullstack.exercise.applifting.cz/images/${imageId}`, {
         headers: {
           "X-API-KEY": "af699f87-dfe3-4a31-9206-a9267dd42a6b",
           Authorization: localStorage.getItem("access_token"),
@@ -93,23 +96,20 @@ const NewArticle = () => {
     }
   };
 
-  const handleSubmit = async () => {
+  const handleUploadImage = async () => {
     const formData = new FormData();
 
     formData.append("image", selectedFile);
 
     try {
-      const response = await fetch("https://fullstack.exercise.applifting.cz/images", {
-        method: "POST",
+      const response = await axios.post("https://fullstack.exercise.applifting.cz/images", formData, {
         headers: {
           "X-API-KEY": "af699f87-dfe3-4a31-9206-a9267dd42a6b",
           Authorization: localStorage.getItem("access_token"),
         },
-        body: formData,
       });
 
-      const data = await response.json();
-      setImageId(data[0].imageId);
+      setImageId(response.data[0].imageId);
       setImageWasUploaded(true);
     } catch (error) {
       console.log(error);
@@ -120,6 +120,7 @@ const NewArticle = () => {
     setSelectedFile(event.target.files[0]);
   };
 
+  // When clicking on the "Upload an image" button, trigger the invisible file input
   const handleBtnClick = () => {
     hiddenFileInput.current.click();
   };
@@ -127,7 +128,7 @@ const NewArticle = () => {
   useEffect(() => {
     async function fetchData() {
       if (selectedFile) {
-        await handleSubmit();
+        await handleUploadImage();
       }
     }
     fetchData();
@@ -165,15 +166,7 @@ const NewArticle = () => {
           <label htmlFor="title" className={styles.label}>
             Article Title
           </label>
-          <input
-            type="text"
-            name="title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            id="title"
-            // required
-            placeholder="My first article"
-          />
+          <input type="text" name="title" value={title} onChange={(e) => setTitle(e.target.value)} id="title" placeholder="My first article" />
           <p className={styles.p}>Featured image</p>
           <input
             multiple={false}
@@ -183,7 +176,6 @@ const NewArticle = () => {
             name="image"
             onChange={handleFileSelect}
             id="title"
-            // required
           />
           {!imageWasUploaded && (
             <button type="button" onClick={handleBtnClick} className={styles.upload_image_btn}>
@@ -197,7 +189,7 @@ const NewArticle = () => {
                 ReUpload new
               </button>{" "}
               <p className={styles.divider_p}>|</p>{" "}
-              <button type="button" onClick={handleDelete} className={styles.delete_image_btn}>
+              <button type="button" onClick={handleImageDelete} className={styles.delete_image_btn}>
                 Delete
               </button>
             </div>

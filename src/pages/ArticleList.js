@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
 import ArticlePreview from "../components/ArticlePreview";
 import Nav from "../components/Nav";
 import styles from "./ArticleList.module.scss";
@@ -8,23 +9,26 @@ const ArticleList = () => {
 
   useEffect(() => {
     const fetchArticles = async () => {
-      const response = await fetch("https://fullstack.exercise.applifting.cz/articles", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "X-API-KEY": "af699f87-dfe3-4a31-9206-a9267dd42a6b",
-          "Authorization": localStorage.getItem("access_token"),
-        },
-      });
+      try {
+        const response = await axios.get("https://fullstack.exercise.applifting.cz/articles", {
+          headers: {
+            "Content-Type": "application/json",
+            "X-API-KEY": "af699f87-dfe3-4a31-9206-a9267dd42a6b",
+            Authorization: localStorage.getItem("access_token"),
+          },
+        });
 
-      const data = await response.json();
-      const items = data.items;
+        const articles = await response.data.items;
 
-      items.sort(function (a, b) {
-        return new Date(b.createdAt) - new Date(a.createdAt);
-      });
+        // Sort articles by date from newest to oldest
+        articles.sort(function (a, b) {
+          return new Date(b.createdAt) - new Date(a.createdAt);
+        });
 
-      setArticles(items);
+        setArticles(articles);
+      } catch (err) {
+        console.log(err);
+      }
     };
 
     fetchArticles();
@@ -33,7 +37,7 @@ const ArticleList = () => {
   return (
     <>
       <Nav />
-      <main className={styles.main}>
+      <main className={styles.article_list_content}>
         <h1 className={styles.article_list_title}>Recent articles</h1>
         {articles &&
           articles.map((article) => {

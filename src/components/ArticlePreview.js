@@ -7,8 +7,6 @@ const ArticlePreview = ({ createdAt, title, perex, imageId, articleId }) => {
   const [author, setAuthor] = useState("");
   const [imageUrl, setImageUrl] = useState("");
 
-  console.log(imageId);
-
   const fetchImage = async () => {
     try {
       const response = await fetch(`https://fullstack.exercise.applifting.cz/images/${imageId}`, {
