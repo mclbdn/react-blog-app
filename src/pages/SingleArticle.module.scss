@@ -4,25 +4,153 @@ main {
   margin-left: 20px;
   margin-right: 20px;
 
-  h1 {
+  article {
     margin-top: 44px;
-    margin-bottom: 30px;
-    font-size: 30px;
+
+    .article_title {
+      line-height: 100%;
+      margin-bottom: 16px;
+      font-size: 30px;
+
+      @media screen and (min-width: 744px) {
+        margin-bottom: 20px;
+        font-size: 35px;
+      }
+
+      @media screen and (min-width: 1440px) {
+        margin-bottom: 24px;
+        font-size: 40px;
+      }
+    }
+
+    .name_and_date {
+      color: $secondary-gray-color;
+      font-size: 10px;
+      margin-bottom: 16px;
+
+      .circle_span {
+        margin-left: 8px;
+        margin-right: 8px;
+
+        @media screen and (min-width: 744px) {
+          margin-left: 10px;
+          margin-right: 10px;
+          margin-bottom: 20px;
+        }
+
+        @media screen and (min-width: 1440px) {
+          margin-left: 12px;
+          margin-right: 12px;
+          margin-bottom: 24px;
+        }
+      }
+
+      @media screen and (min-width: 744px) {
+        font-size: 12px;
+      }
+
+      @media screen and (min-width: 1440px) {
+        font-size: 14px;
+      }
+    }
+
+    .thumbnail_image {
+      width: 100%;
+      min-height: 70vh;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      margin-bottom: 16px;
+
+      @media screen and (min-width: 744px) {
+        margin-bottom: 20px;
+      }
+
+      @media screen and (min-width: 1440px) {
+        margin-bottom: 24px;
+      }
+    }
+
+    .perex_content {
+      width: 100%;
+      margin-bottom: 20px;
+
+      @media screen and (min-width: 744px) {
+        margin-bottom: 30px;
+      }
+
+      @media screen and (min-width: 1440px) {
+        margin-bottom: 40px;
+      }
+    }
 
     @media screen and (min-width: 744px) {
+      flex: 1;
       margin-top: 54px;
-      margin-bottom: 50px;
-      font-size: 35px;
     }
 
     @media screen and (min-width: 1440px) {
       margin-top: 64px;
-      margin-bottom: 60px;
-      font-size: 40px;
+    }
+  }
+
+  aside {
+    display: none;
+
+    .verticla_line {
+      border-left: 1px solid $gray-color;
+      max-height: 400px;
+      margin-left: 12px;
+      margin-right: 12px;
+
+      @media screen and (min-width: 1440px) {
+        margin-left: 24px;
+        margin-right: 24px;
+      }
+    }
+
+    .sidebar_content {
+      .sidebar_header {
+        font-size: 18px;
+        line-height: 100%;
+
+        @media screen and (min-width: 744px) {
+          margin-bottom: 26px;
+          font-size: 20px;
+        }
+
+        @media screen and (min-width: 1440px) {
+          margin-bottom: 32px;
+          font-size: 24px;
+        }
+      }
+
+      .sidebar_subheader {
+        font-size: 12px;
+        margin-bottom: 6px;
+
+        @media screen and (min-width: 1440px) {
+          font-size: 16px;
+          margin-bottom: 8px;
+        }
+      }
+    }
+
+    @media screen and (min-width: 744px) {
+      max-width: 250px;
+      display: flex;
+      margin-top: 54px;
+    }
+
+    @media screen and (min-width: 1440px) {
+      max-width: 300px;
+      margin-top: 64px;
     }
   }
 
   @media screen and (min-width: 744px) {
+    display: flex;
+    justify-content: space-between;
     margin-left: 40px;
     margin-right: 40px;
   }

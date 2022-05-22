@@ -8,9 +8,8 @@ import axios from "axios";
 const NewArticle = () => {
   const navigate = useNavigate();
   const hiddenFileInput = useRef(null);
-  const [mdContent, setMdContent] = useState("**Hello world!!!**");
   const [title, setTitle] = useState("");
-  const [perex, setPerex] = useState("");
+  const [perex, setPerex] = useState("## Hi, there!");
   const [selectedFile, setSelectedFile] = useState(null);
   const [imageWasUploaded, setImageWasUploaded] = useState(false);
   const [imageId, setImageId] = useState("");
@@ -20,7 +19,7 @@ const NewArticle = () => {
   const publishArticle = async (e) => {
     e.preventDefault();
 
-    if (mdContent.length === 0) {
+    if (perex.length === 0) {
       setFormHasErrors({ message: "Please add some content!" });
       return;
     } else if (!title) {
@@ -41,7 +40,6 @@ const NewArticle = () => {
           body: JSON.stringify({
             title,
             perex,
-            content: mdContent,
             imageId,
           }),
         });
@@ -152,11 +150,6 @@ const NewArticle = () => {
     }
   }
 
-  useEffect(() => {
-    let truncatedString = truncateString(mdContent, 50);
-    setPerex(truncatedString);
-  }, [mdContent]);
-
   return (
     <>
       <Nav />
@@ -211,8 +204,8 @@ const NewArticle = () => {
           )}
           <p className={styles.p}>Content</p>
           <div className={styles.md_container}>
-            <MDEditor value={mdContent} onChange={setMdContent} />
-            <MDEditor.Markdown source={mdContent} />
+            <MDEditor value={perex} onChange={setPerex} />
+            <MDEditor.Markdown source={perex} />
           </div>
         </form>
       </main>

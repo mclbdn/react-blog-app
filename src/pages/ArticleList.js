@@ -34,7 +34,7 @@ const ArticleList = () => {
     <>
       <Nav />
       <main className={styles.main}>
-        <h1 className={styles.h1}>Recent articles</h1>
+        <h1 className={styles.article_list_title}>Recent articles</h1>
         {articles &&
           articles.map((article) => {
             return (
