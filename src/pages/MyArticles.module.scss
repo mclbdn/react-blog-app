@@ -1,0 +1,116 @@
+@import "../styles/vars";
+
+.my_articles_main {
+  margin-left: 20px;
+  margin-right: 20px;
+
+  .heading_and_create_new_article_container {
+    margin-bottom: 28px;
+    h1 {
+      font-size: 30px;
+      margin-bottom: 16px;
+
+      @media screen and (min-width: 744px) {
+        margin-bottom: 50px;
+        font-size: 35px;
+      }
+
+      @media screen and (min-width: 1440px) {
+        margin-bottom: 0px;
+        font-size: 40px;
+      }
+    }
+
+    .create_new_article_btn {
+      background-color: $link-blue-color;
+      text-decoration: none;
+      color: $white-color;
+      border-radius: 4px;
+      padding: 2px 5px;
+      margin-bottom: 28px;
+      font-size: 12px;
+
+      @media screen and (min-width: 744px) {
+        font-size: 14px;
+        margin-bottom: 38px;
+        padding: 3px 6px;
+      }
+
+      @media screen and (min-width: 1440px) {
+        margin-bottom: 0px;
+        padding: 6px 12px;
+        margin-left: 32px;
+        font-size: 16px;
+      }
+    }
+
+    @media screen and (min-width: 744px) {
+      margin-top: 54px;
+      margin-bottom: 38px;
+    }
+
+    @media screen and (min-width: 1440px) {
+      display: flex;
+      align-items: center;
+      margin-top: 64px;
+      margin-bottom: 48px;
+    }
+  }
+
+  .my_articles_table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 12px;
+
+    th {
+      text-align: left;
+    }
+
+    .column_names_tr {
+      border-bottom: 2px solid $gray-color;
+    }
+
+    .article_tr {
+      border-bottom: 1px solid $gray-color;
+    }
+
+    .action_icons {
+      display: flex;
+      justify-content: space-around;
+
+      .fa_icon {
+        cursor: pointer;
+      }
+
+      .fa_icon_edit {
+        &:hover {
+          color: $green-color;
+        }
+      }
+
+      .fa_icon_delete {
+        &:hover {
+          color: $red-color;
+        }
+      }
+    }
+
+    @media screen and (min-width: 744px) {
+      font-size: 14px;
+    }
+
+    @media screen and (min-width: 1440px) {
+      font-size: 16px;
+    }
+  }
+
+  @media screen and (min-width: 744px) {
+    margin-left: 40px;
+    margin-right: 40px;
+  }
+
+  @media screen and (min-width: 1440px) {
+    margin-left: 224px;
+    margin-right: 224px;
+  }
+}

@@ -53,8 +53,8 @@ const NewArticle = () => {
       });
 
       navigate("/");
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      console.log(err);
     }
   };
 

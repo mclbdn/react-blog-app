@@ -4,6 +4,7 @@ import ArticleList from "./pages/ArticleList";
 import "./styles/_base.scss";
 import NewArticle from "./pages/NewArticle";
 import SingleArticle from "./pages/SingleArticle";
+import MyArticles from "./pages/MyArticles";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/articles/:id" element={<SingleArticle />} />
           <Route path="login" element={<Login />} />
           <Route path="/newarticle" element={<NewArticle />} />
+          <Route path="/myarticles" element={<MyArticles />} />
         </Routes>
       </BrowserRouter>
     </>

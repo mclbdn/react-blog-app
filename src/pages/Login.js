@@ -18,20 +18,6 @@ const Login = () => {
       password,
     };
 
-    // const response = await fetch("https://fullstack.exercise.applifting.cz/login", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     "X-API-KEY": "af699f87-dfe3-4a31-9206-a9267dd42a6b",
-    //   },
-    //   body: JSON.stringify({
-    //     username,
-    //     password,
-    //   }),
-    // });
-
-    // const data = await response.json();
-    // console.log(data);
     try {
       const response = await axios.post("https://fullstack.exercise.applifting.cz/login", formData, {
         headers: {
