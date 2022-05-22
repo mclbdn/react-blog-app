@@ -51,7 +51,13 @@ const MyArticles = () => {
   };
 
   useEffect(() => {
-    fetchArticles();
+    const hasAccessToken = localStorage.getItem("access_token") ? true : false;
+
+    if (!hasAccessToken) {
+      navigate("/");
+    } else {
+      fetchArticles();
+    }
   }, []);
 
   return (

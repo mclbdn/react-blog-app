@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Nav from "../components/Nav";
 import MDEditor from "@uiw/react-md-editor";
 import axios from "axios";
+import { faLungsVirus } from "@fortawesome/free-solid-svg-icons";
 
 const NewArticle = () => {
   const navigate = useNavigate();
@@ -142,6 +143,14 @@ const NewArticle = () => {
     }
     fetchData();
   }, [imageId]);
+
+  useEffect(() => {
+    const hasAccessToken = localStorage.getItem("access_token") ? true : false;
+
+    if (!hasAccessToken) {
+      navigate("/");
+    }
+  }, []);
 
   function truncateString(str, num) {
     if (str.length > num) {
