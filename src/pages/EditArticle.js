@@ -1,22 +1,63 @@
-import styles from "./NewArticle.module.scss";
+import styles from "./EditArticle.module.scss";
 import { useEffect, useRef, useState } from "react";
+import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Nav from "../components/Nav";
 import MDEditor from "@uiw/react-md-editor";
 import axios from "axios";
 
-const NewArticle = () => {
+const EditArticle = () => {
+  let { id } = useParams();
   const navigate = useNavigate();
   const hiddenFileInput = useRef(null);
   const [title, setTitle] = useState("");
-  const [perex, setPerex] = useState("## Hi, there!");
+  const [perex, setPerex] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
-  const [imageWasUploaded, setImageWasUploaded] = useState(false);
+  const [imageWasUploaded, setImageWasUploaded] = useState(true);
   const [imageId, setImageId] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [formHasErrors, setFormHasErrors] = useState({});
 
-  const publishArticle = async (e) => {
+  const getArticleDetails = async (articleId) => {
+    try {
+      const response = await axios.get(`https://fullstack.exercise.applifting.cz/articles/${articleId}`, {
+        headers: {
+          "Content-Type": "application/json",
+          "X-API-KEY": "af699f87-dfe3-4a31-9206-a9267dd42a6b",
+          Authorization: localStorage.getItem("access_token"),
+        },
+      });
+
+      setTitle(response.data.title);
+      setPerex(response.data.perex);
+      setImageId(response.data.imageId);
+      fetchImage(response.data.imageId);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fetchImage = async (imageId) => {
+    try {
+      const response = await fetch(`https://fullstack.exercise.applifting.cz/images/${imageId}`, {
+        method: "GET",
+        headers: {
+          "X-API-KEY": "af699f87-dfe3-4a31-9206-a9267dd42a6b",
+          Authorization: localStorage.getItem("access_token"),
+        },
+      });
+
+      const imageBlob = await response.blob();
+
+      const localUrl = URL.createObjectURL(imageBlob);
+
+      setImageUrl(localUrl);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const editArticle = async (e) => {
     e.preventDefault();
 
     // Did the user add content?
@@ -44,7 +85,7 @@ const NewArticle = () => {
         imageId,
       };
 
-      await axios.post("https://fullstack.exercise.applifting.cz/articles", dataToSend, {
+      await axios.patch(`https://fullstack.exercise.applifting.cz/articles/${id}`, dataToSend, {
         headers: {
           "Content-Type": "application/json",
           "X-API-KEY": "af699f87-dfe3-4a31-9206-a9267dd42a6b",
@@ -148,6 +189,8 @@ const NewArticle = () => {
 
     if (!hasAccessToken) {
       navigate("/");
+    } else {
+      getArticleDetails(id);
     }
   }, []);
 
@@ -164,9 +207,9 @@ const NewArticle = () => {
       <Nav />
       <main>
         {formHasErrors && <p className={styles.form_error}>{formHasErrors.message}</p>}
-        <form onSubmit={publishArticle} className={styles.publish_form}>
+        <form onSubmit={editArticle} className={styles.publish_form}>
           <div className={styles.heading_and_publish_container}>
-            <h1 className={styles.h1}>Create new article</h1>
+            <h1 className={styles.h1}>Edit article</h1>
             <button type="submit" className={styles.publish_article_btn}>
               Publish article
             </button>
@@ -190,6 +233,7 @@ const NewArticle = () => {
               Upload an Image
             </button>
           )}
+
           {imageWasUploaded && (
             <div className={styles.reupload_and_delete_container}>
               <img className={styles.uploaded_img} src={imageUrl} alt="uploaded file" />{" "}
@@ -213,4 +257,4 @@ const NewArticle = () => {
   );
 };
 
-export default NewArticle;
+export default EditArticle;

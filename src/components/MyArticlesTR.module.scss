@@ -1,0 +1,35 @@
+@import "../styles/vars";
+
+.article_tr {
+  border-bottom: 1px solid $gray-color;
+}
+
+.action_icons {
+  display: flex;
+  justify-content: space-around;
+
+  .fa_icon {
+    cursor: pointer;
+  }
+
+  a {
+    color: $black-color;
+    text-decoration: none;
+
+    &:visited {
+      text-decoration: none;
+    }
+
+    .fa_icon_edit {
+      &:hover {
+        color: $green-color;
+      }
+    }
+  }
+
+  .fa_icon_delete {
+    &:hover {
+      color: $red-color;
+    }
+  }
+}

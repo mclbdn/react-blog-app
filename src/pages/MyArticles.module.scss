@@ -70,30 +70,30 @@
       border-bottom: 2px solid $gray-color;
     }
 
-    .article_tr {
-      border-bottom: 1px solid $gray-color;
-    }
+    // .article_tr {
+    //   border-bottom: 1px solid $gray-color;
+    // }
 
-    .action_icons {
-      display: flex;
-      justify-content: space-around;
+    // .action_icons {
+    //   display: flex;
+    //   justify-content: space-around;
 
-      .fa_icon {
-        cursor: pointer;
-      }
+    //   .fa_icon {
+    //     cursor: pointer;
+    //   }
 
-      .fa_icon_edit {
-        &:hover {
-          color: $green-color;
-        }
-      }
+    //   .fa_icon_edit {
+    //     &:hover {
+    //       color: $green-color;
+    //     }
+    //   }
 
-      .fa_icon_delete {
-        &:hover {
-          color: $red-color;
-        }
-      }
-    }
+    //   .fa_icon_delete {
+    //     &:hover {
+    //       color: $red-color;
+    //     }
+    //   }
+    // }
 
     @media screen and (min-width: 744px) {
       font-size: 14px;

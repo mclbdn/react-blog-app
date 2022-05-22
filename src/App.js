@@ -5,6 +5,7 @@ import "./styles/_base.scss";
 import NewArticle from "./pages/NewArticle";
 import SingleArticle from "./pages/SingleArticle";
 import MyArticles from "./pages/MyArticles";
+import EditArticle from "./pages/EditArticle";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Routes>
           <Route path="/" element={<ArticleList />} />
           <Route path="/articles/:id" element={<SingleArticle />} />
+          <Route path="/editarticle/:id" element={<EditArticle />} />
           <Route path="login" element={<Login />} />
           <Route path="/newarticle" element={<NewArticle />} />
           <Route path="/myarticles" element={<MyArticles />} />

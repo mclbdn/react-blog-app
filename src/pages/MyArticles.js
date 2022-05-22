@@ -5,6 +5,7 @@ import Nav from "../components/Nav";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "./MyArticles.module.scss";
 import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
+import MyArticlesTr from "../components/MyArticlesTR";
 
 const MyArticles = () => {
   const navigate = useNavigate();
@@ -33,22 +34,22 @@ const MyArticles = () => {
     }
   };
 
-  const handleDeleteArticle = async (articleId) => {
-    try {
-      await axios.delete(`https://fullstack.exercise.applifting.cz/articles/${articleId}`, {
-        headers: {
-          "Content-Type": "application/json",
-          "X-API-KEY": "af699f87-dfe3-4a31-9206-a9267dd42a6b",
-          Authorization: localStorage.getItem("access_token"),
-        },
-      });
+  // const fetchNumberOfComments = async (articleId) => {
+  //   try {
+  //     const response = await axios.get(`https://fullstack.exercise.applifting.cz/articles/${articleId}`, {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         "X-API-KEY": "af699f87-dfe3-4a31-9206-a9267dd42a6b",
+  //         Authorization: localStorage.getItem("access_token"),
+  //       },
+  //     });
 
-      // navigate("/");
-      fetchArticles();
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  //     return response.data.comments.length;
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
 
   useEffect(() => {
     const hasAccessToken = localStorage.getItem("access_token") ? true : false;
@@ -81,28 +82,9 @@ const MyArticles = () => {
             </tr>
           </thead>
           <tbody>
-            {articles
-              ? articles.map((article) => {
-                  return (
-                    <tr key={article.articleId} className={styles.article_tr}>
-                      <td>{article.title}</td>
-                      <td>{article.perex}</td>
-                      <td>Elisabeth Strain</td>
-                      <td>0</td>
-                      <td>
-                        <div className={styles.action_icons}>
-                          <FontAwesomeIcon className={`${styles.fa_icon} ${styles.fa_icon_edit}`} icon={faPencil} />
-                          <FontAwesomeIcon
-                            className={`${styles.fa_icon} ${styles.fa_icon_delete}`}
-                            onClick={() => handleDeleteArticle(article.articleId)}
-                            icon={faTrash}
-                          />
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })
-              : null}
+              {articles ? articles.map(article=>{
+                return <MyArticlesTr key={article.articleId} title={article.title} perex={article.perex} articleId={article.articleId} fetchArticles={fetchArticles} />
+              }): null}
           </tbody>
         </table>
       </main>
