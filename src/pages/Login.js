@@ -30,7 +30,7 @@ const Login = () => {
 
       if (response.status === 200) {
         localStorage.setItem("access_token", data.access_token);
-        navigate("/");
+        navigate("/myarticles");
       }
     } catch (err) {
       if (err.response.status === 401) {
@@ -52,7 +52,11 @@ const Login = () => {
       <Nav />
       <main>
         <form className={styles.login_form} onSubmit={login}>
-          {formHasErrors && <p className={styles.form_error}>{formHasErrors.message}</p>}
+          {formHasErrors && (
+            <p id="error_paragraph" className={styles.form_error}>
+              {formHasErrors.message}
+            </p>
+          )}
           <h1 className={styles.h1}>Log In</h1>
           <div className={styles.form_content}>
             <label htmlFor="username">Email</label>
