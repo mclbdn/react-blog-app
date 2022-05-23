@@ -119,7 +119,7 @@ const EditArticle = () => {
         responseType: "blob",
       });
 
-      const imageBlob = response.data;
+      const imageBlob = await response.data;
 
       const localUrl = URL.createObjectURL(imageBlob);
 
@@ -203,14 +203,6 @@ const EditArticle = () => {
       getArticleDetails(id);
     }
   }, []);
-
-  function truncateString(str, num) {
-    if (str.length > num) {
-      return str.slice(0, num) + "...";
-    } else {
-      return str;
-    }
-  }
 
   return (
     <>

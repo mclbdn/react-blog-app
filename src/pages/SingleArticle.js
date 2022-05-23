@@ -17,7 +17,29 @@ const SingleArticle = () => {
   const [numOfComments, setNumOfComments] = useState(0);
   const [commentAuthor, setCommentAuthor] = useState("");
   const [commentContent, setCommentContent] = useState("");
+  const [imageId, setImageId] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
   const [createdAt, setCreatedAt] = useState();
+
+  const handleDownloadImage = async () => {
+    try {
+      const response = await axios.get(`https://fullstack.exercise.applifting.cz/images/${imageId}`, {
+        headers: {
+          "X-API-KEY": "af699f87-dfe3-4a31-9206-a9267dd42a6b",
+          Authorization: localStorage.getItem("access_token"),
+        },
+        responseType: "blob",
+      });
+
+      const imageBlob = await response.data;
+
+      const localUrl = URL.createObjectURL(imageBlob);
+
+      setImageUrl(localUrl);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const postComment = async (e) => {
     e.preventDefault();
@@ -42,8 +64,6 @@ const SingleArticle = () => {
       setCommentAuthor("");
       setCommentContent("");
       fetchArticleDetails();
-
-      //  articleId - author - content;
     } catch (err) {
       console.log(err);
     }
@@ -84,11 +104,16 @@ const SingleArticle = () => {
     setContent(data.content);
     setComments(data.comments);
     setCreatedAt(moment(new Date(data.createdAt)).format("MM/DD/YYYY"));
+    setImageId(data.imageId);
   };
 
   useEffect(() => {
     fetchArticleDetails();
   }, [id]);
+
+  useEffect(() => {
+    handleDownloadImage();
+  }, [imageId]);
 
   return (
     <>
@@ -99,10 +124,16 @@ const SingleArticle = () => {
           <p className={styles.name_and_date}>
             Elon <span className={styles.circle_span}>&#9679;</span> {createdAt}
           </p>
-          <div
+          {/* <div
             className={styles.thumbnail_image}
             style={{
               backgroundImage: `url(${img})`,
+            }}
+          ></div> */}
+          <div
+            className={styles.thumbnail_image}
+            style={{
+              backgroundImage: `url(${imageUrl})`,
             }}
           ></div>
           <div className={styles.content}>
