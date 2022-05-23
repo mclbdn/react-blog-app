@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useGetArticleAuthor } from "../utils";
 import { useNavigate } from "react-router-dom";
 import Nav from "../components/Nav";
 import styles from "./MyArticles.module.scss";
@@ -8,6 +9,10 @@ import MyArticlesTr from "../components/MyArticlesTR";
 const MyArticles = () => {
   const navigate = useNavigate();
   const [articles, setArticles] = useState([]);
+  const [author, setAuthor] = useState("");
+
+  const fetchedData = useGetArticleAuthor();
+  fetchedData.then((author) => setAuthor(author)).catch((err) => console.log(err));
 
   const fetchArticles = async () => {
     try {
@@ -70,6 +75,7 @@ const MyArticles = () => {
                       key={article.articleId}
                       title={article.title}
                       perex={article.perex}
+                      author={author}
                       articleId={article.articleId}
                       fetchArticles={fetchArticles}
                     />

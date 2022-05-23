@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 
 const MyArticlesTr = ({ title, perex, author, articleId, fetchArticles }) => {
   const [numOfComments, setNumOfComments] = useState(0);
+
   let shortPerex = perex.slice(0, 27);
   shortPerex += "...";
 
@@ -53,7 +54,7 @@ const MyArticlesTr = ({ title, perex, author, articleId, fetchArticles }) => {
       <tr key={articleId} className={styles.article_tr}>
         <td>{shortTitle}</td>
         <td>{shortPerex}</td>
-        <td>Elisabeth Strain</td>
+        <td>{author}</td>
         <td>{numOfComments}</td>
         <td>
           <div className={styles.action_icons}>
