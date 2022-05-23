@@ -97,7 +97,6 @@
 
   section {
     form {
-
       .heading_and_publish_container {
         display: flex;
         flex-direction: column;
@@ -141,41 +140,68 @@
         }
       }
 
-      label {
-        font-size: 12px;
-        margin-bottom: 8px;
+      .label_and_input {
+        display: flex;
+        flex-direction: column;
 
-        @media screen and (min-width: 744px) {
-          font-size: 14px;
+        label {
+          font-size: 12px;
+          margin-bottom: 8px;
+
+          @media screen and (min-width: 744px) {
+            font-size: 14px;
+          }
+
+          @media screen and (min-width: 1440px) {
+            font-size: 16px;
+          }
         }
 
-        @media screen and (min-width: 1440px) {
+        input,
+        textarea {
+          border: 1px solid $gray-color;
+          border-radius: 4px;
+          height: 36px;
+          line-height: 36px;
           font-size: 16px;
+          padding-left: 12px;
+          padding-right: 12px;
+          width: 100%;
+          margin-bottom: 20px;
+
+          @media screen and (min-width: 744px) {
+            margin-bottom: 26px;
+          }
+
+          @media screen and (min-width: 1440px) {
+            height: 46px;
+            line-height: 46px;
+            font-size: 20px;
+            padding-left: 16px;
+            padding-right: 16px;
+            margin-bottom: 32px;
+          }
+        }
+
+        .author_input {
+          max-width: 75%;
+
+          @media screen and (min-width: 744px) {
+            max-width: 50%;
+          }
         }
       }
 
-      input {
-        border: 1px solid $gray-color;
-        border-radius: 4px;
-        height: 36px;
-        line-height: 36px;
-        font-size: 16px;
-        padding-left: 12px;
-        padding-right: 12px;
-        width: 100%;
-        margin-bottom: 20px;
+      textarea {
+        resize: none;
+        min-height: 100px;
 
         @media screen and (min-width: 744px) {
-          margin-bottom: 26px;
+          min-height: 150px;
         }
 
         @media screen and (min-width: 1440px) {
-          height: 46px;
-          line-height: 46px;
-          font-size: 20px;
-          padding-left: 16px;
-          padding-right: 16px;
-          margin-bottom: 32px;
+          min-height: 200px;
         }
       }
 

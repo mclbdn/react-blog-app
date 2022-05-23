@@ -19,6 +19,7 @@ const NewArticle = () => {
 
   const publishArticle = async (e) => {
     e.preventDefault();
+    console.log(localStorage.getItem("access_token"));
 
     // Did the user add content?
     if (content.length === 0) {
@@ -56,7 +57,7 @@ const NewArticle = () => {
         headers: {
           "Content-Type": "application/json",
           "X-API-KEY": "af699f87-dfe3-4a31-9206-a9267dd42a6b",
-          Authorization: localStorage.getItem("access_token"),
+          "Authorization": localStorage.getItem("access_token"),
         },
       });
 
@@ -71,7 +72,7 @@ const NewArticle = () => {
       const response = await axios.get(`https://fullstack.exercise.applifting.cz/images/${imageId}`, {
         headers: {
           "X-API-KEY": "af699f87-dfe3-4a31-9206-a9267dd42a6b",
-          Authorization: localStorage.getItem("access_token"),
+          "Authorization": localStorage.getItem("access_token"),
         },
         responseType: "blob",
       });
@@ -91,7 +92,7 @@ const NewArticle = () => {
       await axios.delete(`https://fullstack.exercise.applifting.cz/images/${imageId}`, {
         headers: {
           "X-API-KEY": "af699f87-dfe3-4a31-9206-a9267dd42a6b",
-          Authorization: localStorage.getItem("access_token"),
+          "Authorization": localStorage.getItem("access_token"),
         },
       });
 

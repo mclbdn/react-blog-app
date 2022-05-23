@@ -1,0 +1,103 @@
+@import "../styles/vars";
+
+.comment_container {
+  margin-bottom: 16px;
+
+  .name_and_time {
+    display: flex;
+    align-items: center;
+
+    .commenter_name {
+      font-size: 12px;
+      font-weight: 700;
+      margin-right: 6px;
+
+      @media screen and (min-width: 744px) {
+        font-size: 14px;
+      }
+
+      @media screen and (min-width: 1440px) {
+        font-size: 16px;
+        margin-right: 8px;
+      }
+    }
+
+    .comment_time {
+      font-size: 10px;
+      color: $secondary-gray-color;
+
+      @media screen and (min-width: 744px) {
+        font-size: 12px;
+      }
+
+      @media screen and (min-width: 1440px) {
+        font-size: 14px;
+      }
+    }
+  }
+
+  .comment_content {
+    font-size: 12px;
+    margin-bottom: 6px;
+
+    @media screen and (min-width: 744px) {
+      font-size: 14px;
+    }
+
+    @media screen and (min-width: 1440px) {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+  }
+
+  .comment_rating_container {
+    display: flex;
+    align-items: center;
+
+    .score_para {
+      margin-right: 6px;
+
+      @media screen and (min-width: 1440px) {
+        margin-right: 8px;
+      }
+    }
+
+    .score_divider {
+      margin-right: 6px;
+      color: $gray-color;
+
+      @media screen and (min-width: 1440px) {
+        margin-right: 8px;
+      }
+    }
+
+    .plus_icon {
+      margin-right: 6px;
+      cursor: pointer;
+
+      &:hover {
+        color: $green-color;
+      }
+
+      @media screen and (min-width: 1440px) {
+        margin-right: 8px;
+      }
+    }
+
+    .minus_icon {
+      cursor: pointer;
+
+      &:hover {
+        color: $red-color;
+      }
+    }
+  }
+
+  @media screen and (min-width: 744px) {
+    margin-bottom: 20px;
+  }
+
+  @media screen and (min-width: 1440px) {
+    margin-bottom: 24px;
+  }
+}

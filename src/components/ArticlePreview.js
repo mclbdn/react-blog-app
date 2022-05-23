@@ -5,8 +5,29 @@ import { useEffect, useState } from "react";
 
 const ArticlePreview = ({ createdAt, title, perex, imageId, articleId }) => {
   const date = moment(new Date(createdAt)).format("MM/DD/YYYY");
+  const [numOfComments, setNumOfComments] = useState(0);
   const [author, setAuthor] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+
+  const fetchNumberOfComments = async (articleId) => {
+    try {
+      const response = await axios.get(`https://fullstack.exercise.applifting.cz/articles/${articleId}`, {
+        headers: {
+          "Content-Type": "application/json",
+          "X-API-KEY": "af699f87-dfe3-4a31-9206-a9267dd42a6b",
+          Authorization: localStorage.getItem("access_token"),
+        },
+      });
+
+      setNumOfComments(response.data.comments.length);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchNumberOfComments(articleId);
+  }, []);
 
   const fetchImage = async () => {
     try {
@@ -64,7 +85,7 @@ const ArticlePreview = ({ createdAt, title, perex, imageId, articleId }) => {
         <p className={styles.perex}>{perex}</p>
         <div className={styles.link_and_comments}>
           <a href={`/articles/${articleId}`}>Read whole article</a>
-          <p>0 comments</p>
+          <p>{numOfComments} comments</p>
         </div>
       </div>
     </div>
