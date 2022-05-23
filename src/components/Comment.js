@@ -8,39 +8,38 @@ const Comment = ({ author, content, createdAt, score, commentId }) => {
   const [updatedScore, setUpdatedScore] = useState(score);
 
   const upVoteComment = async () => {
-    console.log(localStorage.getItem("access_token"));
     try {
-      const response = await fetch(`https://fullstack.exercise.applifting.cz/comments/${commentId}/vote/up/`, {
+      const response = await axios({
         method: "POST",
+        url: `https://fullstack.exercise.applifting.cz/comments/${commentId}/vote/up/`,
         headers: {
           "Content-Type": "application/json",
           "X-API-KEY": "af699f87-dfe3-4a31-9206-a9267dd42a6b",
           Authorization: localStorage.getItem("access_token"),
         },
+        data: {},
       });
 
-      const data = await response.json();
-
-      setUpdatedScore(data.score);
+      setUpdatedScore(await response.data.score);
     } catch (err) {
       console.log(err);
     }
   };
 
   const downVoteComment = async () => {
-    console.log(localStorage.getItem("access_token"));
     try {
-      const response = await fetch(`https://fullstack.exercise.applifting.cz/comments/${commentId}/vote/down`, {
+      const response = await axios({
         method: "POST",
+        url: `https://fullstack.exercise.applifting.cz/comments/${commentId}/vote/down/`,
         headers: {
+          "Content-Type": "application/json",
           "X-API-KEY": "af699f87-dfe3-4a31-9206-a9267dd42a6b",
           Authorization: localStorage.getItem("access_token"),
         },
+        data: {},
       });
 
-      const data = await response.json();
-
-      setUpdatedScore(data.score);
+      setUpdatedScore(await response.data.score);
     } catch (err) {
       console.log(err);
     }
