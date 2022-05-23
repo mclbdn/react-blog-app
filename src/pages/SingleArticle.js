@@ -3,7 +3,7 @@ import Nav from "../components/Nav";
 import { useParams } from "react-router-dom";
 import Comment from "../components/Comment";
 import moment from "moment";
-import img from "../assets/img.png";
+
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import axios from "axios";
@@ -12,6 +12,7 @@ import styles from "./SingleArticle.module.scss";
 const SingleArticle = () => {
   let { id } = useParams();
   const [title, setTitle] = useState("");
+  const [author, setAuthor] = useState("");
   const [content, setContent] = useState("");
   const [comments, setComments] = useState([]);
   const [numOfComments, setNumOfComments] = useState(0);
@@ -20,6 +21,25 @@ const SingleArticle = () => {
   const [imageId, setImageId] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [createdAt, setCreatedAt] = useState();
+
+  const getTenant = async () => {
+    try {
+      const response = await axios.get("https://fullstack.exercise.applifting.cz/tenants/bdc84621-2b89-4a98-bc49-867a4fe829d0", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "X-API-KEY": "af699f87-dfe3-4a31-9206-a9267dd42a6b",
+        },
+      });
+
+      const data = await response.data;
+
+      setAuthor(data.name);
+    } catch (err) {
+      setAuthor("Unknown author");
+      console.log(err);
+    }
+  };
 
   const handleDownloadImage = async () => {
     try {
@@ -51,7 +71,7 @@ const SingleArticle = () => {
     };
 
     try {
-      const response = await axios.post(`https://fullstack.exercise.applifting.cz/comments`, dataToSend, {
+      await axios.post(`https://fullstack.exercise.applifting.cz/comments`, dataToSend, {
         headers: {
           "Content-Type": "application/json",
           "X-API-KEY": "af699f87-dfe3-4a31-9206-a9267dd42a6b",
@@ -60,7 +80,6 @@ const SingleArticle = () => {
       });
 
       fetchNumberOfComments(id);
-      console.log(response.data);
       setCommentAuthor("");
       setCommentContent("");
       fetchArticleDetails();
@@ -87,6 +106,7 @@ const SingleArticle = () => {
 
   useEffect(() => {
     fetchNumberOfComments(id);
+    getTenant();
   }, []);
 
   const fetchArticleDetails = async () => {
@@ -99,9 +119,9 @@ const SingleArticle = () => {
     });
 
     const data = await response.data;
-
     const unsortedComments = await response.data.comments;
 
+    // Sort comments by date
     const sortedComments = unsortedComments.sort(function (a, b) {
       return new Date(b.createdAt) - new Date(a.createdAt);
     });
@@ -128,7 +148,7 @@ const SingleArticle = () => {
         <article>
           <h1 className={styles.article_title}>{title}</h1>
           <p className={styles.name_and_date}>
-            Elon <span className={styles.circle_span}>&#9679;</span> {createdAt}
+            {author} <span className={styles.circle_span}>&#9679;</span> {createdAt}
           </p>
           <div
             className={styles.thumbnail_image}

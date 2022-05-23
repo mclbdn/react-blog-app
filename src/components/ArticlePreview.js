@@ -50,20 +50,21 @@ const ArticlePreview = ({ createdAt, title, perex, imageId, articleId }) => {
   };
 
   const getTenant = async () => {
-    const response = await axios.get("https://fullstack.exercise.applifting.cz/tenants/bdc84621-2b89-4a98-bc49-867a4fe829d0", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "X-API-KEY": "af699f87-dfe3-4a31-9206-a9267dd42a6b",
-      },
-    });
+    try {
+      const response = await axios.get("https://fullstack.exercise.applifting.cz/tenants/bdc84621-2b89-4a98-bc49-867a4fe829d0", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "X-API-KEY": "af699f87-dfe3-4a31-9206-a9267dd42a6b",
+        },
+      });
 
-    const data = await response.data;
+      const data = await response.data;
 
-    if (response.status === 200) {
       setAuthor(data.name);
-    } else if (response.status === 401) {
+    } catch (err) {
       setAuthor("Unknown author");
+      console.log(err);
     }
   };
 
@@ -75,7 +76,6 @@ const ArticlePreview = ({ createdAt, title, perex, imageId, articleId }) => {
   return (
     <div className={styles.article_preview_container}>
       <div className={styles.left_side_preview}>
-        {/* <img src={imageUrl}></img> */}
         <div
           className={styles.preview_image}
           style={{

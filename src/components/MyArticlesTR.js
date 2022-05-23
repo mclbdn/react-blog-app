@@ -46,7 +46,7 @@ const MyArticlesTr = ({ title, perex, author, articleId, fetchArticles }) => {
 
   useEffect(() => {
     fetchNumberOfComments(articleId);
-  }, []);
+  }, [articleId]);
 
   return (
     <>

@@ -35,7 +35,7 @@ const Nav = () => {
             <a href="/newarticle">Create Article</a> <FontAwesomeIcon className={styles.logout_btn} onClick={logout} icon={faArrowRightFromBracket} />
           </div>
         ) : (
-          <a href="/login">Log in</a>
+          <a className={styles.login_link} href="/login">Log in</a>
         )}
       </div>
     </nav>
