@@ -30,7 +30,7 @@ const Nav = () => {
       </div>
       <div className={styles.right_side_nav}>
         {isLoggedIn ? (
-          <div>
+          <div className={styles.my_articles_and_create_container}>
             <a href="/myarticles">My Articles</a>
             <a href="/newarticle">Create Article</a> <FontAwesomeIcon className={styles.logout_btn} onClick={logout} icon={faArrowRightFromBracket} />
           </div>

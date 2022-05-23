@@ -75,7 +75,13 @@ const ArticlePreview = ({ createdAt, title, perex, imageId, articleId }) => {
   return (
     <div className={styles.article_preview_container}>
       <div className={styles.left_side_preview}>
-        <img src={imageUrl}></img>
+        {/* <img src={imageUrl}></img> */}
+        <div
+          className={styles.preview_image}
+          style={{
+            backgroundImage: `url(${imageUrl})`,
+          }}
+        ></div>
       </div>
       <div className={styles.right_side_preview}>
         <h4>{title}</h4>
