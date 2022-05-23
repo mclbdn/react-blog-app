@@ -100,9 +100,15 @@ const SingleArticle = () => {
 
     const data = await response.data;
 
+    const unsortedComments = await response.data.comments;
+
+    const sortedComments = unsortedComments.sort(function (a, b) {
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    });
+
     setTitle(data.title);
     setContent(data.content);
-    setComments(data.comments);
+    setComments(sortedComments);
     setCreatedAt(moment(new Date(data.createdAt)).format("MM/DD/YYYY"));
     setImageId(data.imageId);
   };
@@ -124,12 +130,6 @@ const SingleArticle = () => {
           <p className={styles.name_and_date}>
             Elon <span className={styles.circle_span}>&#9679;</span> {createdAt}
           </p>
-          {/* <div
-            className={styles.thumbnail_image}
-            style={{
-              backgroundImage: `url(${img})`,
-            }}
-          ></div> */}
           <div
             className={styles.thumbnail_image}
             style={{
