@@ -1,5 +1,6 @@
-import styles from "./ArticlePreview.module.scss";
 import moment from "moment";
+import axios from "axios";
+import styles from "./ArticlePreview.module.scss";
 import { useEffect, useState } from "react";
 
 const ArticlePreview = ({ createdAt, title, perex, imageId, articleId }) => {
@@ -9,26 +10,26 @@ const ArticlePreview = ({ createdAt, title, perex, imageId, articleId }) => {
 
   const fetchImage = async () => {
     try {
-      const response = await fetch(`https://fullstack.exercise.applifting.cz/images/${imageId}`, {
-        method: "GET",
+      const response = await axios.get(`https://fullstack.exercise.applifting.cz/images/${imageId}`, {
         headers: {
           "X-API-KEY": "af699f87-dfe3-4a31-9206-a9267dd42a6b",
           Authorization: localStorage.getItem("access_token"),
         },
+        responseType: "blob",
       });
 
-      const imageBlob = await response.blob();
+      const imageBlob = await response.data;
 
       const localUrl = URL.createObjectURL(imageBlob);
 
       setImageUrl(localUrl);
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      console.log(err);
     }
   };
 
   const getTenant = async () => {
-    const response = await fetch("https://fullstack.exercise.applifting.cz/tenants/bdc84621-2b89-4a98-bc49-867a4fe829d0", {
+    const response = await axios.get("https://fullstack.exercise.applifting.cz/tenants/bdc84621-2b89-4a98-bc49-867a4fe829d0", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -36,7 +37,7 @@ const ArticlePreview = ({ createdAt, title, perex, imageId, articleId }) => {
       },
     });
 
-    const data = await response.json();
+    const data = await response.data;
 
     if (response.status === 200) {
       setAuthor(data.name);

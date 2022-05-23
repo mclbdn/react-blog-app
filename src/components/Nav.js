@@ -26,14 +26,13 @@ const Nav = () => {
       <div className={styles.left_side_nav}>
         <img className={styles.logo} alt="logo" src={logo} />
         <a href="/">Recent Articles</a>
-        <a href="">About</a>
+        <a href="/">About</a>
       </div>
       <div className={styles.right_side_nav}>
         {isLoggedIn ? (
           <div>
             <a href="/myarticles">My Articles</a>
-            <a href="/newarticle">Create Article</a>{" "}
-            <FontAwesomeIcon className={styles.logout_btn} onClick={logout} icon={faArrowRightFromBracket} />
+            <a href="/newarticle">Create Article</a> <FontAwesomeIcon className={styles.logout_btn} onClick={logout} icon={faArrowRightFromBracket} />
           </div>
         ) : (
           <a href="/login">Log in</a>

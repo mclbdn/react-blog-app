@@ -43,6 +43,7 @@ const ArticleList = () => {
           articles.map((article) => {
             return (
               <ArticlePreview
+                key={article.articleId}
                 articleId={article.articleId}
                 title={article.title}
                 createdAt={article.createdAt}

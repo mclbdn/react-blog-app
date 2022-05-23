@@ -5,10 +5,11 @@ import moment from "moment";
 import img from "../assets/img.png";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import axios from "axios";
 import styles from "./SingleArticle.module.scss";
 
 const SingleArticle = () => {
-  const [perex, setPerex] = useState("");
+  const [content, setContent] = useState("");
   const [articleAuthor, setArticleAuthor] = useState("");
   const [createdAt, setCreatedAt] = useState();
 
@@ -16,8 +17,7 @@ const SingleArticle = () => {
 
   useEffect(() => {
     const fetchArticleDetails = async () => {
-      const response = await fetch(`https://fullstack.exercise.applifting.cz/articles/${id}`, {
-        method: "GET",
+      const response = await axios.get(`https://fullstack.exercise.applifting.cz/articles/${id}`, {
         headers: {
           "Content-Type": "application/json",
           "X-API-KEY": "af699f87-dfe3-4a31-9206-a9267dd42a6b",
@@ -25,9 +25,9 @@ const SingleArticle = () => {
         },
       });
 
-      const data = await response.json();
+      const data = await response.data;
 
-      setPerex(data.perex);
+      setContent(data.content);
       setCreatedAt(moment(new Date(data.createdAt)).format("MM/DD/YYYY"));
     };
 
@@ -49,22 +49,44 @@ const SingleArticle = () => {
               backgroundImage: `url(${img})`,
             }}
           ></div>
-          <div className={styles.perex_content}>
-            <ReactMarkdown children={perex} remarkPlugins={[remarkGfm]} />
+          <div className={styles.content}>
+            <ReactMarkdown children={content} remarkPlugins={[remarkGfm]} />
           </div>
         </article>
-
-        <aside>
-          <div className={styles.verticla_line}></div>
-          <div className={styles.sidebar_content}>
-            <h4 className={styles.sidebar_header}>Related articles</h4>
-            <h6 className={styles.sidebar_subheader}>Some article title</h6>
-            <p className={styles.sidebar_paragraph}>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda, fuga eius tempore ad deleniti adipisci nulla quod. Nemo voluptatem
-              aspernatur veniam fugit, molestiae inventore, harum deserunt odit, alias distinctio sunt.
-            </p>
-          </div>
-        </aside>
+        <section className={styles.comment_section}>
+          <form>
+            <div className={styles.heading_and_publish_container}>
+              <h4 className={styles.h1}>Comments()</h4>
+              <button type="submit" className={styles.publish_comment_btn}>
+                Publish comment
+              </button>
+            </div>
+            <label htmlFor="commentAuthor" className={styles.label}>
+              Your name
+            </label>
+            <input
+              type="text"
+              name="commentAuthor"
+              // value={commentAuthor}
+              // onChange={(e) => setCommentAuthor(e.target.value)}
+              id="commentAuthor"
+              placeholder="Kimbal Musk"
+              maxLength={20}
+            />
+            <label htmlFor="commentContent" className={styles.label}>
+              Your comment
+            </label>
+            <input
+              type="text"
+              name="commentContent"
+              // value={commentAuthor}
+              // onChange={(e) => setCommentAuthor(e.target.value)}
+              id="commentContent"
+              placeholder="This article is awesome!"
+              maxLength={1000}
+            />
+          </form>
+        </section>
       </main>
     </>
   );

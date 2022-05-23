@@ -12,6 +12,7 @@ const EditArticle = () => {
   const hiddenFileInput = useRef(null);
   const [title, setTitle] = useState("");
   const [perex, setPerex] = useState("");
+  const [content, setContent] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const [imageWasUploaded, setImageWasUploaded] = useState(true);
   const [imageId, setImageId] = useState("");
@@ -29,6 +30,7 @@ const EditArticle = () => {
       });
 
       setTitle(response.data.title);
+      setContent(response.data.content);
       setPerex(response.data.perex);
       setImageId(response.data.imageId);
       fetchImage(response.data.imageId);
@@ -39,15 +41,16 @@ const EditArticle = () => {
 
   const fetchImage = async (imageId) => {
     try {
-      const response = await fetch(`https://fullstack.exercise.applifting.cz/images/${imageId}`, {
+      const response = await axios.get(`https://fullstack.exercise.applifting.cz/images/${imageId}`, {
         method: "GET",
         headers: {
           "X-API-KEY": "af699f87-dfe3-4a31-9206-a9267dd42a6b",
           Authorization: localStorage.getItem("access_token"),
         },
+        responseType: "blob",
       });
 
-      const imageBlob = await response.blob();
+      const imageBlob = await response.data;
 
       const localUrl = URL.createObjectURL(imageBlob);
 
@@ -61,8 +64,14 @@ const EditArticle = () => {
     e.preventDefault();
 
     // Did the user add content?
-    if (perex.length === 0) {
+    if (content.length === 0) {
       setFormHasErrors({ message: "Please add some content!" });
+      return;
+    }
+
+    // Did the user add perex?
+    if (perex.length === 0) {
+      setFormHasErrors({ message: "Please add some perex!" });
       return;
     }
 
@@ -81,6 +90,7 @@ const EditArticle = () => {
     try {
       const dataToSend = {
         title,
+        content,
         perex,
         imageId,
       };
@@ -218,6 +228,10 @@ const EditArticle = () => {
             Article Title
           </label>
           <input type="text" name="title" value={title} onChange={(e) => setTitle(e.target.value)} id="title" placeholder="My first article" />
+          <label htmlFor="title" className={styles.label}>
+            Article Perex
+          </label>
+          <input type="text" name="title" value={perex} onChange={(e) => setPerex(e.target.value)} id="perex" placeholder="My favorite perex" />
           <p className={styles.p}>Featured image</p>
           <input
             multiple={false}
@@ -248,8 +262,8 @@ const EditArticle = () => {
           )}
           <p className={styles.p}>Content</p>
           <div className={styles.md_container}>
-            <MDEditor value={perex} onChange={setPerex} />
-            <MDEditor.Markdown source={perex} />
+            <MDEditor value={content} onChange={setContent} />
+            <MDEditor.Markdown source={content} />
           </div>
         </form>
       </main>

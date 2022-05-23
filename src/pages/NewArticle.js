@@ -9,7 +9,8 @@ const NewArticle = () => {
   const navigate = useNavigate();
   const hiddenFileInput = useRef(null);
   const [title, setTitle] = useState("");
-  const [perex, setPerex] = useState("## Hi, there!");
+  const [perex, setPerex] = useState("");
+  const [content, setContent] = useState("## Hi, there!");
   const [selectedFile, setSelectedFile] = useState(null);
   const [imageWasUploaded, setImageWasUploaded] = useState(false);
   const [imageId, setImageId] = useState("");
@@ -20,8 +21,14 @@ const NewArticle = () => {
     e.preventDefault();
 
     // Did the user add content?
-    if (perex.length === 0) {
+    if (content.length === 0) {
       setFormHasErrors({ message: "Please add some content!" });
+      return;
+    }
+
+    // Did the user add perex?
+    if (perex.length === 0) {
+      setFormHasErrors({ message: "Please add some perex!" });
       return;
     }
 
@@ -40,6 +47,7 @@ const NewArticle = () => {
     try {
       const dataToSend = {
         title,
+        content,
         perex,
         imageId,
       };
@@ -174,7 +182,19 @@ const NewArticle = () => {
           <label htmlFor="title" className={styles.label}>
             Article Title
           </label>
-          <input type="text" name="title" value={title} onChange={(e) => setTitle(e.target.value)} id="title" placeholder="My first article" />
+          <input type="text" name="title" value={title} onChange={(e) => setTitle(e.target.value)} id="title" placeholder="My first article" maxLength={100} />
+          <label htmlFor="perex" className={styles.label}>
+            Article Perex
+          </label>
+          <input
+            type="text"
+            name="perex"
+            value={perex}
+            onChange={(e) => setPerex(e.target.value)}
+            id="perex"
+            placeholder="My amazing perex"
+            maxLength={100}
+          />
           <p className={styles.p}>Featured image</p>
           <input
             multiple={false}
@@ -204,8 +224,8 @@ const NewArticle = () => {
           )}
           <p className={styles.p}>Content</p>
           <div className={styles.md_container}>
-            <MDEditor value={perex} onChange={setPerex} />
-            <MDEditor.Markdown source={perex} />
+            <MDEditor value={content} onChange={setContent} />
+            <MDEditor.Markdown source={content} />
           </div>
         </form>
       </main>

@@ -2,9 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Nav from "../components/Nav";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "./MyArticles.module.scss";
-import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 import MyArticlesTr from "../components/MyArticlesTR";
 
 const MyArticles = () => {
@@ -33,23 +31,6 @@ const MyArticles = () => {
       console.log(err);
     }
   };
-
-  // const fetchNumberOfComments = async (articleId) => {
-  //   try {
-  //     const response = await axios.get(`https://fullstack.exercise.applifting.cz/articles/${articleId}`, {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         "X-API-KEY": "af699f87-dfe3-4a31-9206-a9267dd42a6b",
-  //         Authorization: localStorage.getItem("access_token"),
-  //       },
-  //     });
-
-  //     return response.data.comments.length;
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
 
   useEffect(() => {
     const hasAccessToken = localStorage.getItem("access_token") ? true : false;
@@ -82,9 +63,19 @@ const MyArticles = () => {
             </tr>
           </thead>
           <tbody>
-              {articles ? articles.map(article=>{
-                return <MyArticlesTr key={article.articleId} title={article.title} perex={article.perex} articleId={article.articleId} fetchArticles={fetchArticles} />
-              }): null}
+            {articles
+              ? articles.map((article) => {
+                  return (
+                    <MyArticlesTr
+                      key={article.articleId}
+                      title={article.title}
+                      perex={article.perex}
+                      articleId={article.articleId}
+                      fetchArticles={fetchArticles}
+                    />
+                  );
+                })
+              : null}
           </tbody>
         </table>
       </main>

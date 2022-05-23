@@ -6,6 +6,12 @@ import { useEffect, useState } from "react";
 
 const MyArticlesTr = ({ title, perex, author, articleId, fetchArticles }) => {
   const [numOfComments, setNumOfComments] = useState(0);
+  let shortPerex = perex.slice(0, 27);
+  shortPerex += "...";
+
+  let shortTitle = title.slice(0, 27);
+  shortTitle += "...";
+
   const handleDeleteArticle = async (articleId) => {
     try {
       await axios.delete(`https://fullstack.exercise.applifting.cz/articles/${articleId}`, {
@@ -45,8 +51,8 @@ const MyArticlesTr = ({ title, perex, author, articleId, fetchArticles }) => {
   return (
     <>
       <tr key={articleId} className={styles.article_tr}>
-        <td>{title}</td>
-        <td>{perex}</td>
+        <td>{shortTitle}</td>
+        <td>{shortPerex}</td>
         <td>Elisabeth Strain</td>
         <td>{numOfComments}</td>
         <td>
