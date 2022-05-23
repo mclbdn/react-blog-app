@@ -1,4 +1,5 @@
 import axios from "axios";
+import moment from "moment";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "./Comment.module.scss";
@@ -6,6 +7,8 @@ import { useState } from "react";
 
 const Comment = ({ author, content, createdAt, score, commentId }) => {
   const [updatedScore, setUpdatedScore] = useState(score);
+  const createdAtTimestamp = new Date(createdAt);
+  const createdTimeAgo = moment(createdAtTimestamp).fromNow();
 
   const upVoteComment = async () => {
     try {
@@ -50,7 +53,7 @@ const Comment = ({ author, content, createdAt, score, commentId }) => {
       <div className={styles.comment_container}>
         <div className={styles.name_and_time}>
           <p className={styles.commenter_name}>{author}</p>
-          <p className={styles.comment_time}>2 hours ago</p>
+          <p className={styles.comment_time}>{createdTimeAgo}</p>
         </div>
         <p className={styles.comment_content}>{content}</p>
         <div className={styles.comment_rating_container}>
