@@ -56,7 +56,7 @@ export function useFetchNumberOfComments() {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [numberOfComments]);
 
   return {
     fetchArticleCommentCount,

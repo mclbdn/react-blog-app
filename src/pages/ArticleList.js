@@ -15,7 +15,7 @@ const ArticleList = () => {
   return (
     <>
       <Nav />
-      <main data-testid="articleListMainElement" className={styles.article_list_content}>
+      <main className={styles.article_list_content}>
         <h1 className={styles.article_list_title}>Recent articles</h1>
         {articles.length >= 1
           ? articles.map((article) => {

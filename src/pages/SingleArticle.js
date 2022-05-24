@@ -3,8 +3,8 @@ import Nav from "../components/Nav";
 import { useParams } from "react-router-dom";
 import Comment from "../components/Comment";
 import moment from "moment";
-import { useFetchNumberOfComments, useGetArticleAuthor } from "../utils";
 import ReactMarkdown from "react-markdown";
+import { useFetchNumberOfComments } from "../utils";
 import remarkGfm from "remark-gfm";
 import axios from "axios";
 import styles from "./SingleArticle.module.scss";
@@ -15,16 +15,33 @@ const SingleArticle = () => {
   const [author, setAuthor] = useState("");
   const [content, setContent] = useState("");
   const [comments, setComments] = useState([]);
-  const [numOfComments, setNumOfComments] = useState(0);
   const [commentAuthor, setCommentAuthor] = useState("");
   const [commentContent, setCommentContent] = useState("");
   const [imageId, setImageId] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [createdAt, setCreatedAt] = useState();
-  const { fetchArticleCommentCount, numberOfComments } = useFetchNumberOfComments();
 
-  const fetchedData = useGetArticleAuthor();
-  fetchedData.then((author) => setAuthor(author)).catch((err) => console.log(err));
+  // Utils
+  const { fetchArticleCommentCount, numberOfComments, setNumberOfComments } = useFetchNumberOfComments();
+
+  const getTenant = async () => {
+    try {
+      const response = await axios.get("https://fullstack.exercise.applifting.cz/tenants/bdc84621-2b89-4a98-bc49-867a4fe829d0", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "X-API-KEY": "af699f87-dfe3-4a31-9206-a9267dd42a6b",
+        },
+      });
+
+      const data = await response.data;
+
+      setAuthor(data.name);
+    } catch (err) {
+      setAuthor("Unknown author");
+      console.log(err);
+    }
+  };
 
   const handleDownloadImage = async () => {
     try {
@@ -64,8 +81,7 @@ const SingleArticle = () => {
         },
       });
 
-      const commentCount = await fetchArticleCommentCount(id);
-      setNumOfComments(commentCount);
+      fetchArticleCommentCount(id);
       setCommentAuthor("");
       setCommentContent("");
       fetchArticleDetails();
@@ -100,15 +116,11 @@ const SingleArticle = () => {
 
   useEffect(() => {
     fetchArticleCommentCount(id);
-  }, [numOfComments]);
+    getTenant();
+  }, []);
 
   useEffect(() => {
-    const callAsync = async () => {
-      fetchArticleDetails();
-      const commentCount = await fetchArticleCommentCount(id);
-      setNumOfComments(commentCount);
-    };
-    callAsync();
+    fetchArticleDetails();
   }, [id]);
 
   useEffect(() => {

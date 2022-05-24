@@ -59,7 +59,7 @@ const Login = () => {
           )}
           <h1 className={styles.h1}>Log In</h1>
           <div className={styles.form_content}>
-            <label htmlFor="username">Email</label>
+            <label htmlFor="username">Username</label>
             <input
               type="text"
               name="username"
