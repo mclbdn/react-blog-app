@@ -1,11 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
+import { useFetchNumberOfComments } from "../utils";
 import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 import styles from "./MyArticlesTR.module.scss";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const MyArticlesTr = ({ title, perex, author, articleId, fetchArticles }) => {
-  const [numOfComments, setNumOfComments] = useState(0);
+  const { numberOfComments, fetchArticleCommentCount } = useFetchNumberOfComments();
 
   let shortPerex = perex.slice(0, 27);
   shortPerex += "...";
@@ -29,24 +30,8 @@ const MyArticlesTr = ({ title, perex, author, articleId, fetchArticles }) => {
     }
   };
 
-  const fetchNumberOfComments = async (articleId) => {
-    try {
-      const response = await axios.get(`https://fullstack.exercise.applifting.cz/articles/${articleId}`, {
-        headers: {
-          "Content-Type": "application/json",
-          "X-API-KEY": "af699f87-dfe3-4a31-9206-a9267dd42a6b",
-          Authorization: localStorage.getItem("access_token"),
-        },
-      });
-
-      setNumOfComments(response.data.comments.length);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   useEffect(() => {
-    fetchNumberOfComments(articleId);
+    fetchArticleCommentCount(articleId);
   }, [articleId]);
 
   return (
@@ -55,7 +40,7 @@ const MyArticlesTr = ({ title, perex, author, articleId, fetchArticles }) => {
         <td>{shortTitle}</td>
         <td>{shortPerex}</td>
         <td>{author}</td>
-        <td>{numOfComments}</td>
+        <td>{numberOfComments}</td>
         <td>
           <div className={styles.action_icons}>
             <a href={`/editarticle/${articleId}`}>

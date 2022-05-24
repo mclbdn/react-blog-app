@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { useGetArticleAuthor } from "../utils";
+import { useGetArticleAuthor, useFetchArticles } from "../utils";
 import { useNavigate } from "react-router-dom";
 import Nav from "../components/Nav";
 import styles from "./MyArticles.module.scss";
@@ -8,34 +7,12 @@ import MyArticlesTr from "../components/MyArticlesTR";
 
 const MyArticles = () => {
   const navigate = useNavigate();
-  const [articles, setArticles] = useState([]);
   const [author, setAuthor] = useState("");
 
+  // Utils
   const fetchedData = useGetArticleAuthor();
   fetchedData.then((author) => setAuthor(author)).catch((err) => console.log(err));
-
-  const fetchArticles = async () => {
-    try {
-      const response = await axios.get("https://fullstack.exercise.applifting.cz/articles", {
-        headers: {
-          "Content-Type": "application/json",
-          "X-API-KEY": "af699f87-dfe3-4a31-9206-a9267dd42a6b",
-          Authorization: localStorage.getItem("access_token"),
-        },
-      });
-
-      const articles = await response.data.items;
-
-      // Sort articles by date from newest to oldest
-      articles.sort(function (a, b) {
-        return new Date(b.createdAt) - new Date(a.createdAt);
-      });
-
-      setArticles(articles);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const { fetchArticles, articles } = useFetchArticles();
 
   useEffect(() => {
     const hasAccessToken = localStorage.getItem("access_token") ? true : false;
@@ -68,7 +45,7 @@ const MyArticles = () => {
             </tr>
           </thead>
           <tbody>
-            {articles
+            {articles.length >= 1
               ? articles.map((article) => {
                   return (
                     <MyArticlesTr

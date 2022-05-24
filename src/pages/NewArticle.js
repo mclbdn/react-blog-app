@@ -57,7 +57,7 @@ const NewArticle = () => {
         headers: {
           "Content-Type": "application/json",
           "X-API-KEY": "af699f87-dfe3-4a31-9206-a9267dd42a6b",
-          "Authorization": localStorage.getItem("access_token"),
+          Authorization: localStorage.getItem("access_token"),
         },
       });
 
@@ -72,7 +72,7 @@ const NewArticle = () => {
       const response = await axios.get(`https://fullstack.exercise.applifting.cz/images/${imageId}`, {
         headers: {
           "X-API-KEY": "af699f87-dfe3-4a31-9206-a9267dd42a6b",
-          "Authorization": localStorage.getItem("access_token"),
+          Authorization: localStorage.getItem("access_token"),
         },
         responseType: "blob",
       });
@@ -92,7 +92,7 @@ const NewArticle = () => {
       await axios.delete(`https://fullstack.exercise.applifting.cz/images/${imageId}`, {
         headers: {
           "X-API-KEY": "af699f87-dfe3-4a31-9206-a9267dd42a6b",
-          "Authorization": localStorage.getItem("access_token"),
+          Authorization: localStorage.getItem("access_token"),
         },
       });
 
@@ -164,7 +164,11 @@ const NewArticle = () => {
     <>
       <Nav />
       <main>
-        {formHasErrors && <p id="form_error_paragraph" className={styles.form_error}>{formHasErrors.message}</p>}
+        {formHasErrors && (
+          <p id="form_error_paragraph" className={styles.form_error}>
+            {formHasErrors.message}
+          </p>
+        )}
         <form onSubmit={publishArticle} className={styles.publish_form}>
           <div className={styles.heading_and_publish_container}>
             <h1 className={styles.h1}>Create new article</h1>
@@ -175,7 +179,15 @@ const NewArticle = () => {
           <label htmlFor="title" className={styles.label}>
             Article Title
           </label>
-          <input type="text" name="title" value={title} onChange={(e) => setTitle(e.target.value)} id="title" placeholder="My first article" maxLength={100} />
+          <input
+            type="text"
+            name="title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            id="title"
+            placeholder="My first article"
+            maxLength={100}
+          />
           <label htmlFor="perex" className={styles.label}>
             Article Perex
           </label>

@@ -3,7 +3,7 @@ import Nav from "../components/Nav";
 import { useParams } from "react-router-dom";
 import Comment from "../components/Comment";
 import moment from "moment";
-
+import { useFetchNumberOfComments, useGetArticleAuthor } from "../utils";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import axios from "axios";
@@ -21,25 +21,10 @@ const SingleArticle = () => {
   const [imageId, setImageId] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [createdAt, setCreatedAt] = useState();
+  const { fetchArticleCommentCount, numberOfComments } = useFetchNumberOfComments();
 
-  const getTenant = async () => {
-    try {
-      const response = await axios.get("https://fullstack.exercise.applifting.cz/tenants/bdc84621-2b89-4a98-bc49-867a4fe829d0", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "X-API-KEY": "af699f87-dfe3-4a31-9206-a9267dd42a6b",
-        },
-      });
-
-      const data = await response.data;
-
-      setAuthor(data.name);
-    } catch (err) {
-      setAuthor("Unknown author");
-      console.log(err);
-    }
-  };
+  const fetchedData = useGetArticleAuthor();
+  fetchedData.then((author) => setAuthor(author)).catch((err) => console.log(err));
 
   const handleDownloadImage = async () => {
     try {
@@ -79,7 +64,8 @@ const SingleArticle = () => {
         },
       });
 
-      fetchNumberOfComments(id);
+      const commentCount = await fetchArticleCommentCount(id);
+      setNumOfComments(commentCount);
       setCommentAuthor("");
       setCommentContent("");
       fetchArticleDetails();
@@ -87,27 +73,6 @@ const SingleArticle = () => {
       console.log(err);
     }
   };
-
-  const fetchNumberOfComments = async (articleId) => {
-    try {
-      const response = await axios.get(`https://fullstack.exercise.applifting.cz/articles/${articleId}`, {
-        headers: {
-          "Content-Type": "application/json",
-          "X-API-KEY": "af699f87-dfe3-4a31-9206-a9267dd42a6b",
-          Authorization: localStorage.getItem("access_token"),
-        },
-      });
-
-      setNumOfComments(response.data.comments.length);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  useEffect(() => {
-    fetchNumberOfComments(id);
-    getTenant();
-  }, []);
 
   const fetchArticleDetails = async () => {
     const response = await axios.get(`https://fullstack.exercise.applifting.cz/articles/${id}`, {
@@ -134,7 +99,16 @@ const SingleArticle = () => {
   };
 
   useEffect(() => {
-    fetchArticleDetails();
+    fetchArticleCommentCount(id);
+  }, [numOfComments]);
+
+  useEffect(() => {
+    const callAsync = async () => {
+      fetchArticleDetails();
+      const commentCount = await fetchArticleCommentCount(id);
+      setNumOfComments(commentCount);
+    };
+    callAsync();
   }, [id]);
 
   useEffect(() => {
@@ -163,7 +137,7 @@ const SingleArticle = () => {
         <section className={styles.comment_section}>
           <form onSubmit={postComment}>
             <div className={styles.heading_and_publish_container}>
-              <h4 className={styles.h1}>Comments({numOfComments})</h4>
+              <h4 className={styles.h1}>Comments({numberOfComments})</h4>
               <button type="submit" className={styles.publish_comment_btn}>
                 Publish comment
               </button>
