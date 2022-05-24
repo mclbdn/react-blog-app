@@ -53,7 +53,7 @@ const MyArticles = () => {
       <main className={styles.my_articles_main}>
         <div className={styles.heading_and_create_new_article_container}>
           <h1 className={styles.h1}>My articles</h1>
-          <a className={styles.create_new_article_btn} href="/newarticle">
+          <a id="createNewArticleFromMyArticles" className={styles.create_new_article_btn} href="/newarticle">
             Create new article
           </a>
         </div>

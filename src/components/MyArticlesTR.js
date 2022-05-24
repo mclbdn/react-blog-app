@@ -59,7 +59,7 @@ const MyArticlesTr = ({ title, perex, author, articleId, fetchArticles }) => {
         <td>
           <div className={styles.action_icons}>
             <a href={`/editarticle/${articleId}`}>
-              <FontAwesomeIcon className={`${styles.fa_icon} ${styles.fa_icon_edit}`} icon={faPencil} />
+              <FontAwesomeIcon id="edit_article_btn" className={`${styles.fa_icon} ${styles.fa_icon_edit}`} icon={faPencil} />
             </a>
             <FontAwesomeIcon className={`${styles.fa_icon} ${styles.fa_icon_delete}`} onClick={() => handleDeleteArticle(articleId)} icon={faTrash} />
           </div>
