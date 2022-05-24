@@ -212,7 +212,7 @@ const EditArticle = () => {
         <form onSubmit={editArticle} className={styles.publish_form}>
           <div className={styles.heading_and_publish_container}>
             <h1 className={styles.h1}>Edit article</h1>
-            <button type="submit" className={styles.publish_article_btn}>
+            <button id="edit_article_publish_article_button" type="submit" className={styles.publish_article_btn}>
               Publish article
             </button>
           </div>

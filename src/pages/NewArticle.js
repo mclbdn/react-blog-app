@@ -160,23 +160,15 @@ const NewArticle = () => {
     }
   }, []);
 
-  function truncateString(str, num) {
-    if (str.length > num) {
-      return str.slice(0, num) + "...";
-    } else {
-      return str;
-    }
-  }
-
   return (
     <>
       <Nav />
       <main>
-        {formHasErrors && <p className={styles.form_error}>{formHasErrors.message}</p>}
+        {formHasErrors && <p id="form_error_paragraph" className={styles.form_error}>{formHasErrors.message}</p>}
         <form onSubmit={publishArticle} className={styles.publish_form}>
           <div className={styles.heading_and_publish_container}>
             <h1 className={styles.h1}>Create new article</h1>
-            <button type="submit" className={styles.publish_article_btn}>
+            <button id="new_article_publish_article_btn" type="submit" className={styles.publish_article_btn}>
               Publish article
             </button>
           </div>
@@ -204,10 +196,10 @@ const NewArticle = () => {
             type="file"
             name="image"
             onChange={handleFileSelect}
-            id="title"
+            id="photo"
           />
           {!imageWasUploaded && (
-            <button type="button" onClick={handleBtnClick} className={styles.upload_image_btn}>
+            <button id="new_article_image_upload_btn" type="button" onClick={handleBtnClick} className={styles.upload_image_btn}>
               Upload an Image
             </button>
           )}

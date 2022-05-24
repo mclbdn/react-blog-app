@@ -2,8 +2,6 @@ describe("Renders the my articles page", () => {
   beforeEach(() => {
     // Login first
     cy.visit("/login");
-    cy.get("#username").clear();
-    cy.get("#password").clear();
     cy.get("#username").type("elon");
     cy.get("#password").type("musk");
     cy.get("form button").click();
@@ -22,8 +20,6 @@ describe("Redirects", () => {
   it("Redirects to new article after clicking on the create new article button", () => {
     // Login first
     cy.visit("/login");
-    cy.get("#username").clear();
-    cy.get("#password").clear();
     cy.get("#username").type("elon");
     cy.get("#password").type("musk");
     cy.get("form button").click();
@@ -35,8 +31,6 @@ describe("Redirects", () => {
   it("Redirects to edit article after clicking on the edit article button", () => {
     // Login first
     cy.visit("/login");
-    cy.get("#username").clear();
-    cy.get("#password").clear();
     cy.get("#username").type("elon");
     cy.get("#password").type("musk");
     cy.get("form button").click();
